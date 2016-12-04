@@ -1,5 +1,39 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 Chats 
+    small Follow a link to an existing chat or start a new one!
+  .row
+    .col-md-6(ng-controller='chatController')
+      .panel.panel-default
+        .panel-body
+          label(for='search-input') Show only chats containing
+          input#search-input.form-control(ng-model='searchInput' type='text')
+      .panel.panel-default
+        .panel-heading Chats{{ containingText }}
+        table.table
+          thead
+            tr
+              th Topic
+              th Started by
+              th Last message
+              th Unread messages
+          tr(ng-repeat='chat in chats')
+            td 
+              a(href='{{ chat.url }}') {{ chat.topic }}
+            td {{ chat.startedBy }}
+            td {{ chat.lastMessage }}
+            td {{ chat.unread }}
+    .col-md-6
+      .panel.panel-default
+        .panel-heading New Chat
+        .panel-body
+          form(action='/chats' method='post')
+            .form-group
+              label(for='topic-name') Topic
+              input#topic-name.form-control(
+                name='topic'
+                type='text'
+                placeholder='What would you like to chat about?'
+              )
+            button.btn.btn-default(type='submit') Create Chat!
