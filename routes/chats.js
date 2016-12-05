@@ -3,8 +3,8 @@ var models = require('../models');
 // Hard-coded for now:
 var username = 'alice';
 
-module.exports.index = function(req, res, next) {
-  res.render('chats', { title: 'Chat! - Index' });
+module.exports.page = function(req, res, next) {
+    res.render('chats', { title: 'Index', ngApp: 'chat' });
 };
 
 module.exports.getChats = function(req, res, next) {

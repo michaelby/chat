@@ -1,13 +1,20 @@
 var express = require('express');
 var router = express.Router();
-var models = require('../models');
 var chats = require('./chats');
+var messages = require('./messages');
 
-/* GET home page. */
-router.get('/', chats.index);
+router.get('/', chats.page);
 
 router.get('/chats', chats.getChats);
 
 router.post('/chats', chats.postChat);
     
+router.get('/chats/:id', messages.page);
+
+//Soon:
+
+//router.get('/chats/:id/messages', messages.getMessages);
+
+//router.get('/chats/:id/messages', messages.postMessage);
+
 module.exports = router;

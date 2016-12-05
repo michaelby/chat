@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title 
+  .row
+    .col-md-6(ng-controller='messageController')
+      .panel.panel-default(ng-repeat='message in messages')
+        .panel-body
+          .row
+            .col-xs-3
+              p.lead {{ message.author }}
+              p {{ message.date }}
+            .col-xs-9
+              pre {{ message.text }}
+      .row
+      form.form-horizontal
+        .form-group
+          .col-xs-10
+            textarea.form-control(
+              placeholder='Type your message here...'
+              rows='3'
+            )
+          .col-xs-2
+            button.btn.btn-default(type='submit') Send

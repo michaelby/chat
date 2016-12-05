@@ -1,6 +1,9 @@
-angular.module('chat', []);
-        
+// How often to poll the server for updates
 var POLLING_INTERVAL = 2000;
+
+// Module for the chat index page starts here.
+
+angular.module('chat', []);
 
 var getChats = function($scope, $http) {
     uri = '/chats';
@@ -29,3 +32,26 @@ angular
         }, POLLING_INTERVAL);
     });
 
+// Module for the messages page starts here.
+
+angular.module('message', []);
+
+MESSAGES = [{
+    author: 'Alice',
+    text: 'Whats up?',
+    date: new Date()
+}, {
+    author: 'Bob',
+    text: 'Nothing much',
+    date: new Date()
+}, {
+    author: 'Alice',
+    text: 'That\'s great!\n\nI\'m sending a multiline message.',
+    date: new Date()
+}];
+
+angular
+    .module('message')
+    .controller('messageController', function($scope) {
+        $scope.messages = MESSAGES;
+    });
