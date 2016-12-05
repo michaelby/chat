@@ -17,13 +17,13 @@ block content
               th Topic
               th Started by
               th Last message
-              th Unread messages
+              th Messages (Unread / Total)
           tr(ng-repeat='chat in chats')
             td 
               a(href='{{ chat.url }}') {{ chat.topic }}
             td {{ chat.startedBy }}
-            td {{ chat.lastMessage }}
-            td {{ chat.unread }}
+            td {{ chat.lastMessageDate }}
+            td {{ chat.unread }} / {{ chat.messages }}
     .col-md-6
       .panel.panel-default
         .panel-heading New Chat
