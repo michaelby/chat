@@ -46,7 +46,7 @@ module.exports.login = function (res, username, password, callback) {
     });
 };
 
-module.exports.logout = function(res, username, callback) {
+module.exports.logout = function (res, username, callback) {
     res.clearCookie(COOKIE_NAME);
     models.Session.findOneAndRemove({ username: username }, function (err) {
         // There's really nothing we can do on an error.
@@ -54,7 +54,7 @@ module.exports.logout = function(res, username, callback) {
     });
 };
 
-var createSession = function(res, username, callback) {
+var createSession = function (res, username, callback) {
     var session = new models.Session({ username });
 
     session.save(function (err) {
@@ -67,8 +67,8 @@ var createSession = function(res, username, callback) {
     });
 };
 
-var createUserAndSession = function(res, username, password, callback) {
-    var user = new models.User({ username: username, password: password});
+var createUserAndSession = function (res, username, password, callback) {
+    var user = new models.User({ username: username, password: password });
 
     user.save(function (err) {
         if (err) {

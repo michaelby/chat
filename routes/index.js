@@ -3,7 +3,7 @@ var router = express.Router();
 var chats = require('./chats');
 var messages = require('./messages');
 
-var checkLoggedIn = function(wrapped) {
+var checkLoggedIn = function (wrapped) {
     return function (req, res, next) {
         if (req.username) {
             wrapped(req, res, next);

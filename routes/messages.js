@@ -1,7 +1,7 @@
 var models = require('../models');
 
-var findChatHandleErrors = function(req, next, callback) {
-    models.Chat.findById(req.params.id, function(err, chat) {
+var findChatHandleErrors = function (req, next, callback) {
+    models.Chat.findById(req.params.id, function (err, chat) {
         if (err) {
             next(err);
         } else {
@@ -16,13 +16,13 @@ var findChatHandleErrors = function(req, next, callback) {
     });
 };
 
-module.exports.page = function(req, res, next) {
+module.exports.page = function (req, res, next) {
     findChatHandleErrors(req, next, function (chat) {
         res.render('messages', { title: chat.topic, username: req.username });
     });
 };
 
-module.exports.getMessages = function(req, res, next) {
+module.exports.getMessages = function (req, res, next) {
     findChatHandleErrors(req, next, function (chat) {
         var userViewed = {};
         userViewed['messagesViewed.' + req.username] = chat.messages.length;
@@ -38,7 +38,7 @@ module.exports.getMessages = function(req, res, next) {
     });
 };
 
-module.exports.postMessage = function(req, res, next) {
+module.exports.postMessage = function (req, res, next) {
     var message = new models.Message({
         author: req.username,
         text: req.body.text,

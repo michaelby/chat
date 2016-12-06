@@ -41,7 +41,7 @@ var formatDate = function (date) {
 
 angular.module('chat', []);
 
-var getChats = function($scope, $http) {
+var getChats = function ($scope, $http) {
     uri = '/chats';
     if ($scope.searchInput) {
         $scope.containingText = ' containing "'
@@ -59,7 +59,7 @@ var getChats = function($scope, $http) {
 
 angular
     .module('chat')
-    .controller('chatController', function($scope, $interval, $http) {
+    .controller('chatController', function ($scope, $interval, $http) {
         $scope.containingText = '';
 
         getChats($scope, $http);
@@ -75,7 +75,7 @@ angular
 
 angular.module('message', []);
 
-var getMessages = function($scope, $http) {
+var getMessages = function ($scope, $http) {
     $http.get($scope.apiURI).then(function success(res) {
         $scope.messages = res.data;
     }, function failure(error) {
@@ -85,7 +85,7 @@ var getMessages = function($scope, $http) {
 
 angular
     .module('message')
-    .controller('messageController', function($scope, $interval, $http) {
+    .controller('messageController', function ($scope, $interval, $http) {
         var uri = location.toString();
         if (uri[uri.length-1] !== '/') {
             uri += '/';
@@ -99,7 +99,7 @@ angular
             getMessages($scope, $http);
         }, POLLING_INTERVAL);
 
-        $scope.send = function() {
+        $scope.send = function () {
             $http.post($scope.apiURI, { text: $scope.text })
                 .then(function success(res) {
                     $scope.text = '';

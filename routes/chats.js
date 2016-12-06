@@ -1,10 +1,10 @@
 var models = require('../models');
 
-module.exports.page = function(req, res, next) {
+module.exports.page = function (req, res, next) {
     res.render('chats', { title: 'Index', username: req.username });
 };
 
-module.exports.getChats = function(req, res, next) {
+module.exports.getChats = function (req, res, next) {
     var query = models.Chat.find();
     if (req.query.search) {
         query = query.elemMatch('messages', { text: {
@@ -47,7 +47,7 @@ module.exports.getChats = function(req, res, next) {
     });
 };
 
-module.exports.postChat = function(req, res, next) {
+module.exports.postChat = function (req, res, next) {
     var chat = new models.Chat({
         topic: req.body.topic,
         startedBy: req.username,
