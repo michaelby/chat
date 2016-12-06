@@ -3,18 +3,18 @@ var models = require('../models');
 // Hard-coded for now:
 var username = 'alice';
 
-var findChatHandleErrors = function(req, next, cont) {
+var findChatHandleErrors = function(req, next, callback) {
     models.Chat.findById(req.params.id, function(err, chat) {
         if (err) {
-            return next(err);
-        }
-
-        if (chat === null) {
-            var err = new Error('Chat Not Found');
-            err.status = 404;
             next(err);
         } else {
-            cont(chat);
+            if (chat === null) {
+                var err = new Error('Chat Not Found');
+                err.status = 404;
+                next(err);
+            } else {
+                callback(chat);
+            }
         }
     });
 };
@@ -39,17 +39,13 @@ module.exports.postMessage = function(req, res, next) {
         date: new Date()
     });
 
-    var error;
     findChatHandleErrors(req, next, function (chat) {
         chat.update({ $push: { messages: message }}, function (err, raw) {
-            error = err;
+            if (err) {
+                next(err);
+            } else {
+                res.status(201).send();
+            }
         });
     });
-
-    if (error) {
-        next(error);
-    } else {
-        res.status(201).send();
-    }
 };
-

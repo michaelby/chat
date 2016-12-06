@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title 
+  .row
+    .col-md-6(ng-controller='messageController')
+      .panel.panel-default
+        .panel-body
+          p Log in with a new or existing account. If the account exists, 
+            | the password must match.
+          form(action='/login' method='post')
+            .form-group
+              label(for='username') Username
+              input#username.form-control(type='text' name='username')
+            .form-group
+              label(for='Password') Password
+              input#password.form-control(type='password' name='password')
+            button.btn.btn-default(type='submit') Log in
+      if loginError
+        .alert.alert-danger(role='alert') That name is already taken and 
+          | the password doesn't match.
