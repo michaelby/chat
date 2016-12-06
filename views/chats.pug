@@ -3,7 +3,7 @@ extends layout
 block content
   h1 Chats 
     small Follow a link to an existing chat or start a new one!
-  .row
+  .row(ng-app='chat')
     .col-md-6(ng-controller='chatController')
       .panel.panel-default
         .panel-body

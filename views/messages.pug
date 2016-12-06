@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1= title 
-  .row
+  .row(ng-app='message')
     .col-md-6(ng-controller='messageController')
       .panel.panel-default(ng-repeat='message in messages')
         .panel-body
