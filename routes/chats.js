@@ -10,8 +10,10 @@ module.exports.page = function(req, res, next) {
 module.exports.getChats = function(req, res, next) {
     var query = models.Chat.find();
     if (req.query.search) {
-        var regex = '/' + req.query.search + '/';
-        query = query.elemMatch('messages', { text: { $regex: regex }});
+        query = query.elemMatch('messages', { text: {
+            $regex: req.query.search,
+            $options: 'i' // Case-insensitive
+        }});
     }
     query.exec(function (err, chats) {
         if (err) {

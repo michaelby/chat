@@ -8,7 +8,11 @@ block content
       .panel.panel-default
         .panel-body
           label(for='search-input') Show only chats containing
-          input#search-input.form-control(ng-model='searchInput' type='text')
+          input#search-input.form-control(
+            ng-model='searchInput'
+            type='text'
+            placeholder='Case-insensitive regular expression'
+          )
       .panel.panel-default
         .panel-heading Chats{{ containingText }}
         table.table
