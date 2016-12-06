@@ -9,7 +9,7 @@ block content
           .row
             .col-xs-3
               p.lead {{ message.author }}
-              p {{ message.date }}
+              p {{ message.date | formatDate }}
             .col-xs-9
               pre {{ message.text }}
       .row

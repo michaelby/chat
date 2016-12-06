@@ -1,6 +1,42 @@
 // How often to poll the server for updates
 var POLLING_INTERVAL = 2000;
 
+var formatDate = function (date) {
+    var agoString = function (unit, ago) {
+        if (ago > 1) {
+            return ago + ' ' + unit + 's ago';
+        }
+
+        return ago + ' ' + unit + ' ago';
+    };
+
+    if (!date) {
+        return;
+    }
+
+    diff = new Date() - new Date(date); //milliseconds
+
+    var ago;
+
+    ago = Math.floor(diff/(24*60*60*1000));
+    if (ago > 0) {
+        return agoString('day', ago);
+    }
+
+    ago = Math.floor(diff/(60*60*1000));
+    if (ago > 0) {
+        return agoString('hour', ago);
+    }
+
+    ago = Math.floor(diff/(60*1000));
+    if (ago > 0) {
+        return agoString('minute', ago);
+    }
+
+    return 'now';
+};
+
+
 // Module for the chat index page starts here.
 
 angular.module('chat', []);
@@ -31,7 +67,8 @@ angular
         $interval(function () {
             getChats($scope, $http);
         }, POLLING_INTERVAL);
-    });
+    })
+    .filter('formatDate', function () { return formatDate; });
 
 
 // Module for the messages page starts here.
@@ -70,4 +107,5 @@ angular
                     // Just ignore errors for now.
                 });
         };
-    });
+    })
+    .filter('formatDate', function () { return formatDate; });

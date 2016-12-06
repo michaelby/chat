@@ -19,18 +19,23 @@ module.exports.getChats = function(req, res, next) {
         if (err) {
             return next(err);
         }
-        res.status(200);
+
         var response = [];
+        var date;
         for (var i = 0; i < chats.length; i++) {
             var numMessages = chats[i].messages.length;
+
+            date = undefined;
             if (numMessages !== 0) {
-                var date = chats[i].messages[numMessages-1].date;
+                date = chats[i].messages[numMessages-1].date;
             }
+
             var viewed = chats[i].messagesViewed;
             var read = viewed && viewed[username]
             if (read === undefined) {
                 read = 0;
             }
+
             response.push({
                 url: '/chats/' + chats[i]._id,
                 topic: chats[i].topic,
@@ -40,6 +45,7 @@ module.exports.getChats = function(req, res, next) {
                 unread: numMessages - read
             });
         }
+
         res.json(response);
     });
 };
