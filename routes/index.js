@@ -11,10 +11,8 @@ router.post('/chats', chats.postChat);
     
 router.get('/chats/:id', messages.page);
 
-//Soon:
+router.get('/chats/:id/messages', messages.getMessages);
 
-//router.get('/chats/:id/messages', messages.getMessages);
-
-//router.get('/chats/:id/messages', messages.postMessage);
+router.post('/chats/:id/messages', messages.postMessage);
 
 module.exports = router;

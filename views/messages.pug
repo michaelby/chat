@@ -17,8 +17,9 @@ block content
         .form-group
           .col-xs-10
             textarea.form-control(
+              ng-model='text'
               placeholder='Type your message here...'
               rows='3'
             )
           .col-xs-2
-            button.btn.btn-default(type='submit') Send
+            button.btn.btn-default(type='submit' ng-click='send()') Send

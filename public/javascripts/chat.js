@@ -25,6 +25,7 @@ angular
     .module('chat')
     .controller('chatController', function($scope, $interval, $http) {
         $scope.containingText = '';
+
         getChats($scope, $http);
 
         $interval(function () {
@@ -32,26 +33,41 @@ angular
         }, POLLING_INTERVAL);
     });
 
+
 // Module for the messages page starts here.
 
 angular.module('message', []);
 
-MESSAGES = [{
-    author: 'Alice',
-    text: 'Whats up?',
-    date: new Date()
-}, {
-    author: 'Bob',
-    text: 'Nothing much',
-    date: new Date()
-}, {
-    author: 'Alice',
-    text: 'That\'s great!\n\nI\'m sending a multiline message.',
-    date: new Date()
-}];
+var getMessages = function($scope, $http) {
+    $http.get($scope.apiURI).then(function success(res) {
+        $scope.messages = res.data;
+    }, function failure(error) {
+        // Just ignore errors for now.
+    });
+}
 
 angular
     .module('message')
-    .controller('messageController', function($scope) {
-        $scope.messages = MESSAGES;
+    .controller('messageController', function($scope, $interval, $http) {
+        var uri = location.toString();
+        if (uri[uri.length-1] !== '/') {
+            uri += '/';
+        }
+        $scope.apiURI = uri + 'messages';
+        $scope.text = '';
+
+        getMessages($scope, $http);
+
+        $interval(function () {
+            getMessages($scope, $http);
+        }, POLLING_INTERVAL);
+
+        $scope.send = function() {
+            $http.post($scope.apiURI, { text: $scope.text })
+                .then(function success(res) {
+                    $scope.text = '';
+                }, function failure(error) {
+                    // Just ignore errors for now.
+                });
+        };
     });

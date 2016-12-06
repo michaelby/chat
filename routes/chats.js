@@ -59,6 +59,5 @@ module.exports.postChat = function(req, res, next) {
         return next(error);
     }
 
-    // TODO: Redirect to created chat.
-    res.redirect('/');
+    res.redirect('/chats/' + chat._id);
 };
