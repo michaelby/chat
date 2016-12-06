@@ -4,8 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var lookupSession = require('./sessions').lookupSession;
 
 var index = require('./routes/index');
+var login = require('./routes/login');
 
 // Connect to the database
 require('./dbconnection');
@@ -24,6 +26,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(lookupSession);
+
+app.use('/', login);
 app.use('/', index);
 
 // catch 404 and forward to error handler

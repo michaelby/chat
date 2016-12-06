@@ -21,7 +21,7 @@ var findChatHandleErrors = function(req, next, cont) {
 
 module.exports.page = function(req, res, next) {
     findChatHandleErrors(req, next, function (chat) {
-        res.render('messages', { title: chat.topic });
+        res.render('messages', { title: chat.topic, username: req.username });
     });
 };
 

@@ -15,9 +15,9 @@ html
             span.icon-bar
             span.icon-bar
         #navbar-main.navbar-collapse.collapse
-          ul.nav.navbar-nav
-            li
-              a(href='/newchat') New Chat
+          form.navbar-form.navbar-right(action='/logout' method='post')
+            button.btn.btn-default(type='submit') Logout
+          p.navbar-text.navbar-right= username
 
     .container
       block content

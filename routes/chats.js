@@ -4,7 +4,7 @@ var models = require('../models');
 var username = 'alice';
 
 module.exports.page = function(req, res, next) {
-    res.render('chats', { title: 'Index' });
+    res.render('chats', { title: 'Index', username: req.username });
 };
 
 module.exports.getChats = function(req, res, next) {
