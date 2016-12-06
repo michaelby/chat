@@ -1,8 +1,5 @@
 var models = require('../models');
 
-// Hard-coded for now:
-var username = 'alice';
-
 var findChatHandleErrors = function(req, next, callback) {
     models.Chat.findById(req.params.id, function(err, chat) {
         if (err) {
@@ -27,14 +24,23 @@ module.exports.page = function(req, res, next) {
 
 module.exports.getMessages = function(req, res, next) {
     findChatHandleErrors(req, next, function (chat) {
-        //TODO: Update messagesViewed
-        res.json(chat.messages);
+        var userViewed = {};
+        userViewed['messagesViewed.' + req.username] = chat.messages.length;
+
+        chat.update({ $set: userViewed },
+                function (err) {
+                    if (err) {
+                        next(err);
+                    } else {
+                        res.json(chat.messages);
+                    }
+                });
     });
 };
 
 module.exports.postMessage = function(req, res, next) {
     var message = new models.Message({
-        author: username,
+        author: req.username,
         text: req.body.text,
         date: new Date()
     });

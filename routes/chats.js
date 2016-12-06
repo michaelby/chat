@@ -1,8 +1,5 @@
 var models = require('../models');
 
-// Hard-coded for now:
-var username = 'alice';
-
 module.exports.page = function(req, res, next) {
     res.render('chats', { title: 'Index', username: req.username });
 };
@@ -30,10 +27,10 @@ module.exports.getChats = function(req, res, next) {
                 }
 
                 var viewed = chats[i].messagesViewed;
-                var read = viewed && viewed[username]
-                    if (read === undefined) {
-                        read = 0;
-                    }
+                var read = viewed && viewed[req.username];
+                if (read === undefined) {
+                    read = 0;
+                }
 
                 response.push({
                     url: '/chats/' + chats[i]._id,
@@ -53,7 +50,7 @@ module.exports.getChats = function(req, res, next) {
 module.exports.postChat = function(req, res, next) {
     var chat = new models.Chat({
         topic: req.body.topic,
-        startedBy: username,
+        startedBy: req.username,
         messagesViewed: {},
         messages: []
     });
